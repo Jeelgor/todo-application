@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
-
+const rateLimit = require("express-rate-limit");
 const app = express();
 
 app.use(express.json());
@@ -25,5 +25,15 @@ app.get("/api/protected", authMiddleware, (req, res) => {
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try again after 15 minutes",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 
 module.exports = app;
