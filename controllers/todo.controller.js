@@ -36,12 +36,22 @@ exports.createTodo = async (req, res, next) => {
 
 exports.getTodos = async (req, res, next) => {
   try {
-    const todos = await Todo.find({
-      userId: req.user.userId,
-    }).lean();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 1;
+    const filter = { userId: req.user.userId };
+    const status = req.query.status;
+
+    if (status) filter.status = status;
+
+    const todos = await Todo.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
 
     return res.status(200).json({
       message: "Todos fetched",
+      page,
+      limit,
       data: todos,
     });
   } catch (error) {

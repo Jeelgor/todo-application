@@ -14,6 +14,10 @@ app.use(helmet());
 const authRoutes = require("./routes/auth.routes");
 const todoRoutes = require("./routes/todo.routes");
 const authMiddleware = require("./middleware/auth.middleware");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/auth", authRoutes);
 app.use("/", todoRoutes);
