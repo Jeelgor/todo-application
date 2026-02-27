@@ -3,7 +3,7 @@ const validator = require("validator");
 
 exports.createTodo = async (req, res, next) => {
   try {
-    const { title, description, status } = req.body;
+    let { title, description, status } = req.body;
 
     title = title ? validator.escape(title.trim()) : "";
     description = description ? validator.escape(description.trim()) : "";
@@ -39,6 +39,31 @@ exports.getTodos = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 1;
     const filter = { userId: req.user.userId };
+    const status = req.query.status;
+
+    if (status) filter.status = status;
+
+    const todos = await Todo.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    return res.status(200).json({
+      message: "Todos fetched",
+      page,
+      limit,
+      data: todos,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAllUserTodos = async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const filter = {};
     const status = req.query.status;
 
     if (status) filter.status = status;
