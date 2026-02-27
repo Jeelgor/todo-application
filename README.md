@@ -36,24 +36,30 @@ JWT_REFRESH_SECRET=<different-strong-random-secret>
 Database connection is handled in `config/db.js` using `mongoose.connect(process.env.MONGO_URI)`.
 
 ### How to run the project locally
-1. Install dependencies:
+
+1. Clone the repo:
+```bash
+git clone https://github.com/Jeelgor/todo-application.git
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Add your `.env` file.
+3. Add your `.env` file.
 
-3. Start the server:
+4. Start the server:
 ```bash
 npm start
 ```
 
 Server starts on `http://localhost:<PORT>` (default in env is `3000`).
 
-4. Open Swagger docs:
+5. Open Swagger docs:
 - `http://localhost:<PORT>/api/docs`
 
-5. Run tests:
+6. Run tests:
 ```bash
 npm test
 ```
