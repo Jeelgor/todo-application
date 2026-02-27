@@ -37,7 +37,7 @@ exports.createTodo = async (req, res, next) => {
 exports.getTodos = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const filter = { userId: req.user.userId };
     const status = req.query.status;
 
