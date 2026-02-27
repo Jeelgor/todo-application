@@ -58,6 +58,20 @@ Server starts on `http://localhost:<PORT>` (default in env is `3000`).
 npm test
 ```
 
+## Running with Docker
+
+1. Start the application:
+```bash
+docker-compose up --build
+```
+2. Access the application
+
+- API Base URL:
+- `http://localhost:3000`
+
+- Swagger documentation:
+- `http://localhost:3000/api/docs`
+
 ## 4. Authentication flow explanation
 1. Register
 - `POST /api/auth/register` with email and password.
